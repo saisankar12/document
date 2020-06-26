@@ -188,7 +188,35 @@ _**, so you can skip this step.
      
    4. onClick attribute or onOptionsItemSelected() 
         - However, the [onOptionsItemSelected()](https://developer.android.com/reference/android/app/Activity.html#onOptionsItemSelected(android.view.MenuItem)) method can handle all the menu-item clicks in one place and determine which menu item the user clicked. This makes your code easier to understand.
-        - For example, you can use a **_switch case_** block to call the appropriate method (such as **_showOrder_**) based on the menu item's **_id_.** You retrieve the **_id_** using the [getItemId()](https://developer.android.com/reference/android/widget/Adapter.html#getItemId(int)) method:
+```java
+     @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        //Action
+        return super.onOptionsItemSelected(item);
+    }
+```
+<br>
+
+    * For example, you can use a **_switch case_** block to call the appropriate method (such as **Toast** message) based on the menu item's **_id_.** You retrieve the **_id_** using the [getItemId()](https://developer.android.com/reference/android/widget/Adapter.html#getItemId(int)) method:
      
-   5. Method to handle item click
+```java
+     @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.notification:
+                Toast.makeText(this, ""+item.getTitle(), Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.dial:
+                Toast.makeText(this, ""+item.getTitle(), Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.call:
+                Toast.makeText(this, ""+item.getTitle(), Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+```
+     <br>
+## Implementation
+   
 
