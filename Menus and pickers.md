@@ -63,7 +63,7 @@ If you are not using the Basic Activity template, use the resource-inflate desig
 
 <br>
 <p align="center">
-<img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/option%20_menu.png">
+<img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/dg_options_menu_design_pattern.png">
 </p>
 <br>
 
@@ -75,9 +75,62 @@ If you are not using the Basic Activity template, use the resource-inflate desig
 
 ## Steps To Create App bar with options menu
 
-    1. Create AndroidResourse directory
-    2. XML menu resource (menu_main.xml)
-    3. onCreateOptionsMenu() to inflate the menu
-    4. onClick attribute or onOptionsItemSelected() 
-    5. Method to handle item click
+   1. Create AndroidResourse directory
+        * Select the **res** folder in the **Project > Android** pane and choose **File > New > Android resource directory.**
+        <br>
+        <p align="center">
+            <img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/dircectory_creation.PNG">
+        </p>
+        <br>
+        
+        * Choose **menu** in the **Resource** type drop-down menu, and click **OK.**
+        <br>
+        <p align="center">
+            <img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/menu_resourse_directory.PNG">
+        </p>
+        <br>
+        
+   2. XML menu resource (filename.xml)
+       * Select the new **menu** folder, and choose **File > New > Menu resource file.**
+        <br>
+        <p align="center">
+            <img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/menuxml_file_creation.PNG">
+        </p>
+        <br>
+        
+        * Enter the name, such as **Ex: menu_main**, and click **OK**. The new **_menu_main.xml_** file now resides within the **menu** folder.
+        <br>
+        <p align="center">
+            <img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/menu_xml_file.PNG">
+        </p>
+        <br>
+        
+        * Add menu items using the **_<item ... />_** tag. <br>
+
+```xml
+<item
+    android:id="@+id/user"
+    android:title="User"/>
+```
+
+* Adding icons for menu items
+
+<br>
+        <p align="center">
+            <img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/image_creation.PNG">
+        </p>
+        <br>
+        
+            
+```xml
+<item
+    android:id="@+id/user"
+    android:title="User"
+    android:icon="@mipmap/user"
+        />
+```
+        
+   3. onCreateOptionsMenu() to inflate the menu
+   4. onClick attribute or onOptionsItemSelected() 
+   5. Method to handle item click
 
