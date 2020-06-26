@@ -106,22 +106,26 @@ If you are not using the Basic Activity template, use the resource-inflate desig
         <br>
         
         * Add menu items using the **_<item ... />_** tag. <br>
-
-```xml
+        
+               ```xml
 <item
     android:id="@+id/user"
     android:title="User"/>
 ```
+<br>
 
 * Adding icons for menu items
-
-<br>
+       
+        <br>
         <p align="center">
             <img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/image_creation.PNG">
         </p>
         <br>
         
-            
+* Icon and appearance attributes            
+            - Use the following attributes to govern the menu item's appearance:
+                  _android:icon:_ An image to use as the menu item icon. For example, the following menu item defines ic_order_white as its icon:
+                  
 ```xml
 <item
     android:id="@+id/user"
