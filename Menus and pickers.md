@@ -1,7 +1,10 @@
 # Menus and Pickers
-### Types of Menus
+## Types of Menus
 
-A menu is a set of options. The user can select from a menu to perform a function, for example searching for information, saving information, editing information, or navigating to a screen. The figure below shows the types of menus that the Android system offers.
+A menu is a set of options. The user can select from a menu to perform a function, for example searching for information, saving information, editing information, or navigating to a screen. The figure below shows the types of menus that the Android system offers. 
+
+<br>
+
 
 <p align="center">
 <img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/types_menus.png">
@@ -25,4 +28,18 @@ A menu is a set of options. The user can select from a menu to perform a functio
       - the Gmail app anchors a popup menu to the app bar for the message view with Reply, Reply All, and Forward.
 
 ## App bar with options menu
+
+The app bar (also called the action bar) is a dedicated space at the top of each Activity screen. When you create an _Activity_ from a template (such as Empty Template), an app bar is automatically included for the _Activity_.
+
+The app bar by default shows the app title, or the name defined in AndroidManifest.xml by the android:label attribute for the Activity. The app bar may also include the Up button for navigating up to the parent activity. Up navigation is described in the chapter on using the app bar for navigation.
+
+The options menu in the app bar usually provides navigation to other screens in the app, or options that affect using the app itself. (The options menu should not include options that act on an element on the screen. For that you use a contextual menu, described later in this chapter.)
+
+For example, your options menu might let the user navigate to another activity to place an order. Or your options menu might let the user change settings or profile information, or do other actions that have a global impact on the app.
+
+The options menu appears in the right corner of the app bar. The app bar is split into four functional areas that apply to most apps, as shown in the figure below.
+
+<p align="center">
+<img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/types_menus.png">
+</p>
 
