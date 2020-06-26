@@ -39,7 +39,16 @@ For example, your options menu might let the user navigate to another activity t
 
 The options menu appears in the right corner of the app bar. The app bar is split into four functional areas that apply to most apps, as shown in the figure below.
 
+<br>
 <p align="center">
-<img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/types_menus.png">
+<img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/option%20_menu.png">
 </p>
+<br>
+
+In the figure above:
+
+1. Navigation button or Up button: Use a navigation button in this space to open a navigation drawer, or use an Up button for navigating up through your app's screen hierarchy to the parent activity. Both are described in the next chapter.
+2. Title: The title in the app bar is the app title, or the name defined in **_AndroidManifest.xml_** by the **android:label** attribute for the activity.
+3. Action icons for the options menu: Each action icon appears in the app bar and represents one of the options menu's most frequently used items. Less frequently used options menu items appear in the overflow options menu.
+4. Overflow options menu: The overflow icon opens a popup with option menu items that are not shown as icons in the app bar.
 
