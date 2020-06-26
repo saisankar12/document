@@ -197,8 +197,9 @@ _**, so you can skip this step.
 ```
 <br>
 
-    * For example, you can use a **_switch case_** block to call the appropriate method (such as **Toast** message) based on the menu item's **_id_.** You retrieve the **_id_** using the [getItemId()](https://developer.android.com/reference/android/widget/Adapter.html#getItemId(int)) method:
-     
+* For example, you can use a **_switch case_** block to call the appropriate method (such as **Toast** message) based on the menu item's **_id_.** You retrieve the **_id_** using the [getItemId()](https://developer.android.com/reference/android/widget/Adapter.html#getItemId(int)) method:
+<br>
+
 ```java
      @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -216,7 +217,7 @@ _**, so you can skip this step.
         return super.onOptionsItemSelected(item);
     }
 ```
-     <br>
+<br>
 ## Implementation
    
 
