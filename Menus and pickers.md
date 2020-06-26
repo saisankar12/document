@@ -133,8 +133,62 @@ If you are not using the Basic Activity template, use the resource-inflate desig
     android:icon="@mipmap/user"
         />
 ```
-        
+   <br>  
+       
+* Use the **_app:showAsAction_** attribute to show menu items as icons in the app bar, with the following values:
+
+     - **_"always":_** Always place this item in the app bar. Use this only if it's critical that the item appear in the app bar (such as a Search icon). If you set   multiple items to always appear in the app bar, they might overlap something else in the app bar, such as the app title.
+     - **_"ifRoom":_** Only place this item in the app bar if there is room for it. If there is not enough room for all the items marked **_"ifRoom"_**, the items with the lowest **_orderInCategory_** values are displayed in the app bar. The remaining items are displayed in the overflow menu.
+     - **_"never":_** Never place this item in the app bar. Instead, list the item in the app bar's overflow menu.
+     - **_"withText":_** Also include the title text (defined by **_android:title_**) with the item. This attribute is used primarily to include the title with the icon in the app bar, because if the item appears in the overflow menu, the title text appears regardless.
+       
+### Position attributes
+       
+* Use the **_android:orderInCategory_** attribute to specify the order in which the menu items appear in the menu, with the lowest number appearing higher in the menu. This is usually the order of importance of the item within the menu. For example, if you want **Order** to be first, followed by **Status, Favorites,** and **Contact**, the following table shows the priority of these items in the menu:
+       <br>
+           
+    Menu item | orderInCategory attribute
+    ----------|----------------------------
+    Order | 10 
+    Status | 20
+    Favorites | 30 
+    Contact | 40 
+       
+<br>
+        <p align="center">
+            <img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/orderattribute.PNG">
+        </p>
+ <br>
+     
+```xml 
+     <item
+        android:title="Call"
+        android:id="@+id/call"
+        android:icon="@mipmap/call"
+        android:orderInCategory="40"
+        app:showAsAction="always"
+        />
+  ```
    3. onCreateOptionsMenu() to inflate the menu
+        - If you start an app project using the Basic Activity template, the template adds the code for inflating the options menu with **_MenuInflater
+_**, so you can skip this step.
+
+        - If you are not using the Basic Activity template, inflate the menu resource in your activity by overriding the [onCreateOptionsMenu()](https://developer.android.com/reference/android/app/Activity.html#onCreateOptionsMenu(android.view.Menu)) method and using the [getMenuInflater()](https://developer.android.com/reference/android/app/Activity.html#getMenuInflater()) method of the **Activity** class.
+
+        - The **getMenuInflater()** method returns a [MenuInflater](https://developer.android.com/reference/android/view/MenuInflater.html), which is a class used to instantiate menu XML files into **Menu** objects. The **MenuInflater** class provides the [inflate()](https://developer.android.com/reference/android/view/MenuInflater.html#inflate(int,%20android.view.Menu)) method, which takes two parameters:
+            - The resource **_id_** for an XML layout resource to load (**_R.menu.menu_main_** in the following example).
+            - The [Menu](https://developer.android.com/reference/android/view/Menu.html) to inflate into (_menu_ in the following example)
+```java
+     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+```
+     
    4. onClick attribute or onOptionsItemSelected() 
+        - However, the [onOptionsItemSelected()](https://developer.android.com/reference/android/app/Activity.html#onOptionsItemSelected(android.view.MenuItem)) method can handle all the menu-item clicks in one place and determine which menu item the user clicked. This makes your code easier to understand.
+        - For example, you can use a **_switch case_** block to call the appropriate method (such as **_showOrder_**) based on the menu item's **_id_.** You retrieve the **_id_** using the [getItemId()](https://developer.android.com/reference/android/widget/Adapter.html#getItemId(int)) method:
+     
    5. Method to handle item click
 
