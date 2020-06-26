@@ -29,9 +29,9 @@ A menu is a set of options. The user can select from a menu to perform a functio
 
 ## App bar with options menu
 
-The app bar (also called the action bar) is a dedicated space at the top of each Activity screen. When you create an _Activity_ from a template (such as Empty Template), an app bar is automatically included for the _Activity_.
+The app bar (also called the action bar) is a dedicated space at the top of each **_Activity_** screen. When you create an **_Activity_** from a template (such as Empty Template), an app bar is automatically included for the **_Activity_**.
 
-The app bar by default shows the app title, or the name defined in AndroidManifest.xml by the android:label attribute for the Activity. The app bar may also include the Up button for navigating up to the parent activity. Up navigation is described in the chapter on using the app bar for navigation.
+The app bar by default shows the app title, or the name defined in **_AndroidManifest.xml_** by the **_android:label_** attribute for the **_Activity_**. The app bar may also include the Up button for navigating up to the parent activity. Up navigation is described in the chapter on using the app bar for navigation.
 
 The options menu in the app bar usually provides navigation to other screens in the app, or options that affect using the app itself. (The options menu should not include options that act on an element on the screen. For that you use a contextual menu, described later in this chapter.)
 
@@ -47,8 +47,37 @@ The options menu appears in the right corner of the app bar. The app bar is spli
 
 In the figure above:
 
-1. Navigation button or Up button: Use a navigation button in this space to open a navigation drawer, or use an Up button for navigating up through your app's screen hierarchy to the parent activity. Both are described in the next chapter.
-2. Title: The title in the app bar is the app title, or the name defined in **_AndroidManifest.xml_** by the **android:label** attribute for the activity.
-3. Action icons for the options menu: Each action icon appears in the app bar and represents one of the options menu's most frequently used items. Less frequently used options menu items appear in the overflow options menu.
-4. Overflow options menu: The overflow icon opens a popup with option menu items that are not shown as icons in the app bar.
+1. **_Navigation button or Up button:_** Use a navigation button in this space to open a navigation drawer, or use an Up button for navigating up through your app's screen hierarchy to the parent activity. Both are described in the next chapter.
+2. **_Title:_** The title in the app bar is the app title, or the name defined in **_AndroidManifest.xml_** by the **android:label** attribute for the activity.
+3. **_Action icons for the options menu:_** Each action icon appears in the app bar and represents one of the options menu's most frequently used items. Less frequently used options menu items appear in the overflow options menu.
+4. **_Overflow options menu:_** The overflow icon opens a popup with option menu items that are not shown as icons in the app bar.
+
+
+## Adding the options menu
+
+Android provides a standard XML format to define options menu items. Instead of building the menu in your **_Activity_** code, you can define the menu and all its items in an XML [menu resource](https://developer.android.com/guide/topics/resources/menu-resource.html). A menu resource defines an application menu (options menu, context menu, or popup menu) that can be inflated with [MenuInflater](https://developer.android.com/reference/android/view/MenuInflater.html), which loads the resource as a [Menu](https://developer.android.com/reference/android/view/Menu.html) object in your Activity.
+
+If you start an app project using the Basic Activity template, the template adds the menu resource for you and inflates the options menu with **_MenuInflater_**, so you can skip this step and go right to "Defining how menu items appear".
+
+If you are not using the Basic Activity template, use the resource-inflate design pattern, which makes it easy to create an options menu. Follow these steps (refer to the figure below):
+
+<br>
+<p align="center">
+<img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/option%20_menu.png">
+</p>
+<br>
+
+   1. **XML menu resource.** Create an XML menu resource file for the menu items, and assign appearance and position attributes as described in the next section.
+   2. **Inflating the menu.** Override the [onCreateOptionsMenu()](https://developer.android.com/reference/android/app/Activity.html#onCreateOptionsMenu(android.view.Menu)) method in your **_Activity_** to inflate the menu.
+   3. **Handling menu-item clicks.** Menu items are View elements, so you can use the **_android:onClick_** attribute for each menu item. However, the [onOptionsItemSelected()](https://developer.android.com/reference/android/app/Activity.html#onOptionsItemSelected(android.view.MenuItem)) method can handle all the menu-item clicks in one place and determine which menu item the user clicked, which makes your code easier to understand.
+   4. **Performing actions.** Create a method to perform an action for each options menu item.
+
+
+## Steps To Create App bar with options menu
+
+    1. Create AndroidResourse directory
+    2. XML menu resource (menu_main.xml)
+    3. onCreateOptionsMenu() to inflate the menu
+    4. onClick attribute or onOptionsItemSelected() 
+    5. Method to handle item click
 
