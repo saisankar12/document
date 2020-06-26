@@ -218,6 +218,111 @@ _**, so you can skip this step.
     }
 ```
 <br>
-## Implementation
+    
+## Codeing Implementation
+    - Create Start new android Studio Project and Select Empty Activity
+    - No need modify your **_activity_main.xml_**, If any requriments you can modify it.
+    - Create Android Resourse Directory with the name of menu 
+    - Create menu resourse xml file
+    - adding items
+    - intialization in java file 
+    - handling the click events
+    
+### activity_main.xml
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+```
+ ### menu.xml
+ ```xml
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/notification"
+        android:title="Search" />
+    <item
+        android:id="@+id/dial"
+        android:title="Dail" />
+    <item
+        android:id="@+id/call"
+        android:icon="@mipmap/call"
+        android:title="Call"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/user"
+        android:title="User" />
+    
+</menu>
+    
+ ```
+    
+### MainActivity.java
+```java
+package com.example.menuspickers;
+
+
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.notification:
+                // we are getting menu item title here
+                Toast.makeText(this, ""+item.getTitle(), Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.dial:
+                Toast.makeText(this, ""+item.getTitle(), Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.call:
+                Toast.makeText(this, ""+item.getTitle(), Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+}
+```
+    
    
 
