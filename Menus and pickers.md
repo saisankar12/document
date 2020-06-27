@@ -220,13 +220,13 @@ _**, so you can skip this step.
 <br>
     
 ## Codeing Implementation
-    - Create Start new android Studio Project and Select Empty Activity
-    - No need modify your **_activity_main.xml_**, If any requriments you can modify it.
-    - Create Android Resourse Directory with the name of menu 
-    - Create menu resourse xml file
-    - adding items
-    - intialization in java file 
-    - handling the click events
+- Create Start new android Studio Project and Select Empty Activity
+- No need modify your **_activity_main.xml_**, If any requriments you can modify it.
+- Create Android Resourse Directory with the name of menu 
+- Create menu resourse xml file
+- adding items
+- intialization in java file 
+- handling the click events
     
 ### activity_main.xml
 ```xml
