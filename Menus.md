@@ -1,4 +1,4 @@
-# Menus and Pickers
+# Menus
 ## Types of Menus
 
 A menu is a set of options. The user can select from a menu to perform a function, for example searching for information, saving information, editing information, or navigating to a screen. The figure below shows the types of menus that the Android system offers. 
