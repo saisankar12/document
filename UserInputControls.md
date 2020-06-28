@@ -87,5 +87,96 @@ If the algorithm does not give you what you want, you can override it by adding 
 </LinearLayout>
 ```
 
+In a vertical _LinearLayout_, navigating up from the first _Button_ would not ordinarily go anywhere, nor would navigating down from the second _Button_. But in the example above, the 
+_top_ Button has specified the bottom Button as the nextFocusUp (and vice versa), so the navigation focus will cycle from top-to-bottom and bottom-to-top.
 
+To declare a View as focusable in your UI (when it is traditionally not), add the _android:focusable_ XML attribute to the View in the layout, and set its value to true. You can also declare a View as focusable while in "touch mode" by setting android:focusableInTouchMode set to true.
+
+You can also explicitly set the focus or find out which View has focus by using the following methods:
+
+* Call [onFocusChanged](https://developer.android.com/reference/android/view/View.html#onFocusChanged(boolean,%20int,%20android.graphics.Rect)) to determine where focus came from.
+* To find out which View currently has the focus, call [Activity.getCurrentFocus()](https://developer.android.com/reference/android/app/Activity.html#getCurrentFocus()), or use [ViewGroup.getFocusedChild()](https://developer.android.com/reference/android/view/ViewGroup.html#getFocusedChild()) to return the focused child of a _View_ (if any).
+* To find the _View_ in the hierarchy that currently has focus, use [findFocus()](https://developer.android.com/reference/android/view/ViewGroup.html#findFocus()).
+* Use [requestFocus](https://developer.android.com/reference/android/view/View.html#requestFocus()) to give focus to a specific View.
+* To change whether a View can take focus, call [setFocusable](https://developer.android.com/reference/android/view/View.html#setFocusable(boolean)).
+* To set a listener that is notified when the View gains or loses focus, use [setOnFocusChangeListener](https://developer.android.com/reference/android/view/View.html#setOnFocusChangeListener(android.view.View.OnFocusChangeListener)).
+
+you learn more about focus with EditText elements.
+
+### Checkboxes
+
+Use a set of checkboxes when you want the user to select any number of choices, including zero choices:
+
+* Each checkbox is independent of the other boxes in the set, so selecting one box doesn't clear the other boxes. (If you want to limit the user's selection to one choice, use radio buttons.)
+* A user can clear a checkbox that was already selected.
+
+Users expect checkboxes to appear in a vertical list, like a to-do list, or side-by-side if the labels are short.
+
+<br>
+<p align="center">
+<img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/checkboxes.png">
+</p>
+<br>
+
+Each checkbox is a separate [CheckBox](https://developer.android.com/reference/android/widget/CheckBox.html) element in your XML layout. To create multiple checkboxes in a vertical orientation, use a vertical LinearLayout:
+
+```xml
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <CheckBox android:id="@+id/checkbox1_chocolate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ChocolateSyrup" />
+        <CheckBox android:id="@+id/checkbox2_sprinkles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sprinkles" />
+        <CheckBox android:id="@+id/checkbox3_nuts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CrushedNuts" />
+
+</LinearLayout>
+```
+
+Typically programs retrieve the state of each _CheckBox_ when a user taps or clicks a **Submit** or **Done** _Button_ in the same _Activity_, which uses the _android:onClick_ attribute to call a method such as _onSubmit()_:
+
+```xml
+<Button
+   android:layout_width="wrap_content"
+   android:layout_height="wrap_content"
+   android:text="@string/submit"
+   android:onClick="onSubmit"/>
+```
+
+The callback method—_onSubmit()_ in the example above—must be _public_, return _void_, and define a _View_ as a parameter (the view that was clicked). In this callback method you can determine whether a _CheckBox_ is selected by using the [isChecked()](https://developer.android.com/reference/android/widget/CompoundButton.html#isChecked()) method (inherited from [CompoundButton](https://developer.android.com/reference/android/widget/CompoundButton.html)).
+
+The _isChecked()_ method returns _true_ if there is a check mark in the box. For example, the following statement assigns _true_ or _false_ to _checked_, depending on whether the checkbox is checked:
+
+```java
+public void onSubmit(View view) {
+        CheckBox ch_java = findViewById(R.id.java);
+        CheckBox ch_android = findViewById(R.id.android);
+        StringBuilder builder = new StringBuilder();
+        if(ch_java.isChecked()){
+            builder.append(ch_java.getText().toString()+",");
+        }
+
+        if(ch_android.isChecked()){
+            builder.append(ch_android.getText().toString());
+        }
+// Code to display the result...
+}
+```
+
+**Tip**: To respond quickly to a _CheckBox_—such as display a message (like an alert), or show a set of further options—you can use the _android:onClick_ attribute in the XML layout for each _CheckBox_ to declare the callback method for that _CheckBox_. The callback method must be defined within the _Activity_ that hosts this layout.
+
+For more information about checkboxes, see [Checkboxes](https://developer.android.com/guide/topics/ui/controls/checkbox.html) in the Android developer documentation.
+
+### Radio buttons
+
+Use radio buttons when you have two or more options that are mutually exclusive. When the user selects one, the others are automatically deselected. (If you want to enable more than one selection from the set, use checkboxes.)
 
