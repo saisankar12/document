@@ -186,3 +186,128 @@ Use radio buttons when you have two or more options that are mutually exclusive.
 </p>
 <br>
 
+Users expect radio buttons to appear as a vertical list, or side-by-side if the labels are short.
+
+Each radio button is an instance of the [RadioButton](https://developer.android.com/reference/android/widget/RadioButton.html) class. Radio buttons are normally placed within a [RadioGroup](https://developer.android.com/reference/android/widget/RadioGroup.html) in a layout. When several RadioButton elements are inside a RadioGroup, selecting one RadioButton clears all the others.
+
+
+Add RadioButton elements to your XML layout within a RadioGroup:
+
+```xml
+<RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <RadioButton
+            android:id="@+id/sameday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onRadioButtonClicked"
+            android:text="One" />
+        <RadioButton
+            android:id="@+id/nextday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onRadioButtonClicked"
+            android:text="Two" />
+        <RadioButton
+            android:id="@+id/pickup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onRadioButtonClicked"
+            android:text="Three" />
+</RadioGroup>
+```
+
+Use the _android:onClick_ attribute for each _RadioButton_ to declare the click handler, which must be defined within the _Activity_ that hosts the layout. In the layout above, clicking any _RadioButton_ calls the same _onRadioButtonClicked()_ method in the _Activity_. You could also create separate click handlers in the _Activity_ for each _RadioButton_.
+
+The click handler method must be _public_, return _void_, and define a _View_ as its only parameter (the view that was clicked). The following shows one click handler, _onRadioButtonClicked()_, for all the _RadioButton_ elements in the _RadioGroup_. It uses a _switch_ case block to check the resource _id_ for the _RadioButton_ element to determine which one was checked:
+
+```java
+public void onRadioButtonClicked(View view) {
+   // Check to see if a button has been clicked.
+   boolean checked = ((RadioButton) view).isChecked();
+   // Check which radio button was clicked.
+   switch(view.getId()) {
+      case R.id.sameday:
+         if (checked)
+            // Code for same day service ...
+            break;
+      case R.id.nextday:
+         if (checked)
+            // Code for next day delivery ...
+            break;
+      case R.id.pickup:
+         if (checked)
+            // Code for pick up ...
+            break;
+   }
+}
+```
+
+**Tip**: To give users a chance to review their radio button selection before the app responds, you could implement a **Submit** or **Done** button as shown previously with checkboxes, and remove the _android:onClick_ attributes from the radio buttons. Then add the _onRadioButtonClicked()_ method to the android:onClick attribute for the **Submit** or **Done** button.
+
+For more information about radio buttons, see [Radio Buttons](https://developer.android.com/guide/topics/ui/controls/radiobutton.html) in the Android developer documentation.
+
+### Spinner
+
+A [Spinner](https://developer.android.com/reference/android/widget/Spinner.html) provides a quick way for the user to select one value from a set. The user taps on the spinner to see a drop-down list with all available values.
+
+A spinner works well when the user has more than three choices, because spinners scroll as needed, and a spinner doesn't take up much space in your layout. If you are providing only two or three choices and you have space in your layout, you might want to use radio buttons instead of a spinner.
+
+**Tip**: For more information about spinners, see the [Spinners](https://developer.android.com/guide/topics/ui/controls/spinner.html) guide.
+
+<br>
+<p align="center">
+<img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/spinner-android.png">
+</p>
+<br>
+
+If you have a long list of choices, a spinner might extend beyond your layout, forcing the user to scroll. A spinner scrolls automatically, with no extra code needed. However, making the user scroll through a long list (such as a list of countries) isn't recommended, because it can be hard for the user to select an item.
+
+To create a spinner, use the [Spinner](https://developer.android.com/reference/android/widget/Spinner.html) class, which creates a View that displays individual spinner values as child View elements and lets the user pick one. Follow these steps:
+
+1. Create a Spinner element in your XML layout, and specify its values using an array and an [ArrayAdapter](https://developer.android.com/reference/android/widget/ArrayAdapter.html).
+2. Create the _Spinner_ and its adapter using the [SpinnerAdapter](https://developer.android.com/reference/android/widget/SpinnerAdapter.html) class.
+3. To define the selection callback for the Spinner, update the _Activity_ that uses the _Spinner_ to implement the [AdapterView.OnItemSelectedListener](https://developer.android.com/reference/android/widget/AdapterView.OnItemSelectedListener.html) interface.
+
+### Create the Spinner UI element
+
+To create a spinner in your XML layout, add a Spinner element, which provides the drop-down list:
+
+```xml
+<Spinner
+   android:id="@+id/label_spinner"
+   android:layout_width="wrap_content"
+   android:layout_height="wrap_content"/>
+```
+
+### Specify values for the Spinner
+
+Add an adapter that fills the _Spinner_ list with values. An adapter is like a bridge, or intermediary, between two incompatible interfaces. For example, a memory card reader acts as an adapter between the memory card and a laptop. You plug the memory card into the card reader, and plug the card reader into the laptop, so that the laptop can read the memory card.
+
+The adapter takes the data set you've specified (an array in this example), and makes a _View_ for each item in the data set (a _View_ within the _Spinner_), as shown in the figure below.
+
+<br>
+<p align="center">
+<img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/dg_adapter_view.png">
+</p>
+<br>
+
+The [SpinnerAdapter](https://developer.android.com/reference/android/widget/SpinnerAdapter.html) class, which implements the _Adapter_ class, allows you to define two different views: one that shows the data values in the _Spinner_ itself, and one that shows the data in the drop-down list when the _Spinner_ is touched or clicked.
+
+The values you provide for the _Spinner_ can come from any source, but must be provided through a 
+_SpinnerAdapter_, such as an [ArrayAdapter](https://developer.android.com/reference/android/widget/ArrayAdapter.html) if the values are easily stored in an array. The following shows a simple array called _labels_array_ of predetermined values in the **_strings.xml_** file:
+
+```xml
+<string-array name="labels_array">
+        <item>Home</item>
+        <item>Work</item>
+        <item>Mobile</item>
+        <item>Other</item>
+</string-array>
+```
+
+**Tip**: You can use a CursorAdapter if the values are provided from a source such as a stored file or a database. You learn more about stored data in another lesson.
+
