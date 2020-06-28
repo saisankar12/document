@@ -369,7 +369,12 @@ spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 ```
 
 The arguments for onItemSelected() are as follows:
---------------------
+
+| parent AdapterView  | The AdapterView where the selection happened |
+| ------------- | ------------- |
+| view View  | The View within the AdapterView that was clicked  |
+| int pos  | The position of the View in the adapter  |
+| long id | The row id of the item that is selected  |
 
 Implement/override the _onNothingSelected()_ callback method of the [AdapterView.OnItemSelectedListener](https://developer.android.com/reference/android/widget/AdapterView.OnItemSelectedListener.html) interface to do something if nothing is selected.
 
