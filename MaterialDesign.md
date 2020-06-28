@@ -205,3 +205,178 @@ A font provider is an application that retrieves fonts and caches them locally s
 <img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/downloadable-fonts-process.png" width="400dp">
 </p>
 <br>
+
+### Layout
+
+You specify View elements for your app's UI in layout resource files. Layout resources are written in XML and listed within the layout folder in the res folder in the Project > Android pane. The following guide explains some of the best practices for designing a layout.
+
+### Metrics
+
+Components in the Material Design templates that are meant for mobile, tablet, and desktop devices align to an 8dp square grid. A dp is a [density-independent pixel](https://material.io/design/layout/understanding-layout.html#pixel-density), an abstract unit based on screen density. A dp is similar to an sp, but sp is also scaled by the user's font size preference. That's why sp is preferred for accessibility.
+
+The 8dp square grid guides the placement of elements in your layout. Every square in the grid is 8dp x 8dp, so the height and width of every element in the layout is a multiple of 8dp.
+
+<br>
+<p align="center">
+<img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/8dp_grid.png">
+</p>
+<br>
+
+In the above figure:
+
+1. The status bar in this layout is 24dp tall, the height of three grid squares.
+2. The toolbar is 56dp tall, the height of seven grid squares.
+3. One of the right-hand content margins is 16dp from the edge of the screen, the width of two grid squares.
+
+Iconography in toolbars aligns to a 4dp square grid instead of an 8dp square grid, so the dimensions of icons in the toolbar are multiples of 4dp.
+
+Keylines
+
+Keylines are outlines in a layout grid that determine the placement of text and icons. For example, keylines mark the edges of the margins in a layout.
+
+<br>
+<p align="center">
+<img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/keylines.png">
+</p>
+<br>
+
+In the above figure:
+
+1. Keyline showing the left margin for the screen edge, which in this case is 16dp.
+2. Keyline showing the left margin for content associated with an icon or avatar, 72dp.
+3. Keyline showing the right margin for the screen edge, 16dp.
+
+Material Design typography aligns to a 4dp baseline grid, which is a grid made up only of horizontal lines.
+
+To learn more about metrics and keylines in Material Design, visit the [metrics and keylines guide](https://material.io/design/layout/understanding-layout.html).
+
+### Components and patterns
+
+Button elements and many other View elements used in Android conform by default to Material Design principles. The Material Design guide includes components and patterns that you can build on to help your users intuit how the elements in your UI work, even if users are new to your app.
+
+Use Material Design components to guide the specs and behavior of buttons, chips, cards, and many other UI elements. Use Material Design [patterns](https://material.io/design/communication/) to guide how you format dates and times, gestures, the navigation drawer, and many other aspects of your UI.
+
+This section teaches you about the Design Support Library and some of the components and patterns that are available to you. For complete documentation about all the components and patterns that you can use, see the [Material Design guide](https://material.io/design/).
+
+### Design Support Library
+
+The [Design](https://developer.android.com/reference/android/support/design/package-summary.html) package provides APIs to support adding Material Design components and patterns to your apps. The [Design Support Library](https://developer.android.com/topic/libraries/support-library/packages#design) adds support for various Material Design components and patterns for you to build on. To use the library, include the following dependency in your build.gradle (Module: app) file:
+
+```gradle
+implementation 'com.google.android.material:material:1.1.0'
+```
+
+To make sure you have the most recent version number for the Design Support Library, check the Support Library page.
+
+### Floating action buttons (FABs)
+
+Use a floating action button (FAB) for actions you want to encourage users to take. A FAB is a circled icon that floats "above" the UI. On focus it changes color slightly, and it appears to lift up when selected. When tapped, it can contain related actions.
+
+<br>
+<p align="center">
+<img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/fab_example.png">
+</p>
+<br>
+
+In this figure:
+
+A normal-sized FAB
+To implement a FAB, use [FloatingActionButton](https://developer.android.com/guide/topics/ui/floating-action-button) and set the FAB's attributes in your layout XML. For example:
+
+```xml
+<com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:src="@drawable/ic_my_icon"
+        android:contentDescription="@string/submit"
+        android:layout_margin="16dp"
+        app:fabSize="normal"
+        app:elevation="10dp"/>
+```
+The [fabSize](https://developer.android.com/reference/android/support/design/widget/FloatingActionButton.html#attr_FloatingActionButton_fabSize) attribute sets the FAB's size. It can be **_"normal" (56dp), "mini" (40dp), or "auto",_** which changes based on the window size.
+
+The FAB's elevation is the distance between its surface and the depth of its shadow. You can set the elevation attribute as a reference to another resource, a string, a boolean, or several other ways.
+
+To learn about all the attributes you can set for a FAB including clickable, rippleColor, and backgroundTint, see FloatingActionButton. To make sure you're using FABs as intended, check the extensive [FAB usage information in the Material Design guide](https://material.io/components/buttons-floating-action-button).
+
+### Snackbars
+
+A snackbar provides brief feedback about an operation through a message in a horizontal bar on the screen. It contains a single line of text directly related to the operation performed. A snackbar (shown as #1 in the figure below) can contain a text action, but no icons.
+
+<br>
+<p align="center">
+<img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/snackbar_example.png">
+</p>
+<br>
+
+Snackbars automatically disappear after a timeout or after a user interaction elsewhere on the screen. You can associate a snackbar with any kind of view (any object derived from the View class). However, if you associate the snackbar with a [CoordinatorLayout](https://developer.android.com/reference/androidx/coordinatorlayout/widget/CoordinatorLayout), the snackbar gains additional features:
+
+* The user can dismiss the snackbar by swiping it away.
+* The layout moves some other UI elements when the snackbar appears. For example, if the layout has a FAB, the layout moves the FAB up when it shows the snackbar, instead of drawing the snackbar on top of the FAB.
+
+To create a _Snackbar_ object, use the [Snackbar.make()](https://developer.android.com/reference/android/support/design/widget/Snackbar.html#make(android.view.View,%20int,%20int)) method. Specify the ID of the CoordinatorLayout to use for the snackbar, the message that the snackbar displays, and the length of time to show the message. For example, this statement creates the snackbar and calls show() to show the snackbar to the user:
+
+```java
+Snackbar.make(findViewById(R.id.myCoordinatorLayout),R.string.email_sent,Snackbar.LENGTH_SHORT).show;
+```
+
+For more information, see [Building and Displaying a Pop-Up Message](https://developer.android.com/training/snackbar/showing.html) and the Snackbar reference. To make sure you're using snackbars as intended, see the [snackbar usage information in the Material Design guide](https://material.io/design/).
+
+**Tip**: A Toast is similar to a Snackbar, except that a Toast is usually used for a system message, and a Toast can't be swiped off the screen.
+
+### Tabs
+
+Use tabs to organize content at a high level. For example, the user might use tabs to switch between View elements, data sets, or functional aspects of an app. Present tabs as a single row above their associated content. Make tab labels short and informative. For example, in the figure below, the app shows three tabs (marked by #1), with the **All** tab selected.
+
+<br>
+<p align="center">
+<img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/tabs_example.png">
+</p>
+<br>
+
+You can you use tabs with swipe views in which users navigate between tabs with a horizontal finger gesture (horizontal paging). If your tabs use swipe views, don't pair the tabs with content that also supports swiping. For an example, see the lesson in this course on providing user navigation.
+
+For information on implementing tabs, see [Creating Swipe Views with Tabs](https://developer.android.com/guide/navigation/navigation-swipe-view). To make sure you're using tabs as intended, see the extensive [tab usage information in the Material Design guide](https://material.io/components/tabs/#tabs-usage).
+
+### Cards
+
+A card is a sheet of material that serves as an entry point to more detailed information. Each card covers only one subject. A card may contain a photo, text, and a link. It can display content containing elements of varying size, such as photos with captions of variable length.
+
+A card collection is a layout of cards on the same plane. The figure below shows one card in a card collection (marked by #1).
+
+<br>
+<p align="center">
+<img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/card_example.png">
+</p>
+<br>
+
+[CardView](https://developer.android.com/guide/topics/ui/layout/cardview) is included as part of the v7 support library. To use the library, include the following dependency in your build.gradle (Module: app) file:
+
+```gradle
+implementation 'androidx.cardview:cardview:1.0.0'
+```
+
+### Lists
+
+A list is a single continuous column of rows of equal width. Each row functions as a container for a tile. Tiles hold content, and can vary in height within a list.
+
+<br>
+<p align="center">
+<img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/list_example.png">
+</p>
+<br>
+
+In the figure above:
+
+1. A tile within the list
+2. A list with rows of equal width, each containing a tile
+
+To create a list, use the RecyclerView widget. include the following dependency in your build.gradle (Module: app) file:
+
+```gradle
+implementation 'androidx.recyclerview:recyclerview:1.1.0'
+```
+
+For more information on creating lists in Android, see [Create a List with RecyclerView](https://developer.android.com/guide/topics/ui/layout/recyclerview).
