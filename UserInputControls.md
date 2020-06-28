@@ -311,3 +311,68 @@ _SpinnerAdapter_, such as an [ArrayAdapter](https://developer.android.com/refere
 
 **Tip**: You can use a CursorAdapter if the values are provided from a source such as a stored file or a database. You learn more about stored data in another lesson.
 
+### Create the Spinner and its adapter
+
+Create the _Spinner_, and set its listener to the _Activity_ that implements the callback methods. The best place to do this is after the _Activity_ layout is inflated in the _onCreate()_ method. Follow these steps:
+
+1. Instantiate a _Spinner_ in the _onCreate()_ method using the _label_spinner_ element in the layout, and set its listener _(spinner.setOnItemSelectedListener)_ in the _onCreate()_ method, as shown in the following code snippet:
+
+```java
+@Override
+ protected void onCreate(Bundle savedInstanceState) {
+    // ... Rest of onCreate code ...
+    // Create the spinner.
+    Spinner spinner = findViewById(R.id.label_spinner);
+    if (spinner != null) {
+             spinner.setOnItemSelectedListener(this);
+    }
+    // Create ArrayAdapter using the string array and default spinner layout.
+```
+
+The code snippet above uses findViewById() to find the Spinner by its id (label_spinner). It then sets the _onItemSelectedListener_ to whichever Activity implements the callbacks (this) using the [setOnItemSelectedListener()](https://developer.android.com/reference/android/widget/AdapterView.html#setOnItemSelectedListener(android.widget.AdapterView.OnItemSelectedListener)) method
+
+
+2. Continuing to edit the onCreate() method, add a statement that creates the ArrayAdapter with the string array (labels_array) using the Android-supplied Spinner layout for each item (layout.simple_spinner_item):
+
+```java
+ String[] branch = getResources().getStringArray(R.array.branches);
+ ArrayAdapter<String> arrayAdapter=new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,branch);
+```
+
+3. Specify the layout for the Spinner choices to be simple_spinner_dropdown_item, and then apply the adapter to the Spinner:
+
+```java
+spinner.setAdapter(arrayAdapter);
+```
+
+The snippet above uses [setAdapter()](https://developer.android.com/reference/android/widget/AdapterView.html#setAdapter(T)) to apply the adapter to the Spinner. You should use the simple_spinner_dropdown_item default layout, unless you want to define your own layout for the Spinner appearance.
+
+### Add code to respond to Spinner selections
+
+When the user chooses an item from the spinner's drop-down list, here's what happens and how you retrieve the item:
+
+1. The Spinner receives an on-item-selected event.
+2. The event triggers the calling of the onItemSelected() callback method of the [AdapterView.OnItemSelectedListener](https://developer.android.com/reference/android/widget/AdapterView.OnItemSelectedListener.html) interface.
+3. Retrieve the selected item in the Spinner using the [getItemAtPosition()](https://developer.android.com/reference/android/widget/AdapterView.html#getItemAtPosition(int)) method of the _AdapterView_ class:
+
+```java
+spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+           //Implement Your Action
+        }
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+            //Implement Your Action
+        }
+});
+```
+
+The arguments for onItemSelected() are as follows:
+--------------------
+
+Implement/override the _onNothingSelected()_ callback method of the [AdapterView.OnItemSelectedListener](https://developer.android.com/reference/android/widget/AdapterView.OnItemSelectedListener.html) interface to do something if nothing is selected.
+
+For more information about using spinners, see [Spinners](https://developer.android.com/guide/topics/ui/controls/spinner.html) in the Android developer documentation.
+
+
