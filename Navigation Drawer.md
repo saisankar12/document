@@ -252,6 +252,90 @@ The following XML code snippet shows how to define a menu group:
 
 </menu>
 ```
+### Setting up the navigation drawer and item listeners
 
+To use a listener for the navigation drawer's menu items, the _Activity_ hosting the navigation drawer must implement the [OnNavigationItemSelectedListener](https://developer.android.com/reference/android/support/design/widget/NavigationView.OnNavigationItemSelectedListener.html) interface:
 
+1. Implement NavigationView.OnNavigationItemSelectedListener in the class definition:
+```java
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+}
+```
+This interface offers the onNavigationItemSelected() method, which is called when an item in the navigation drawer menu item is tapped. As you enter OnNavigationItemSelectedListener, the red light bulb appears on the left margin.
+
+2. Click the light bulb, choose Implement methods, and choose the onNavigationItemSelected(item:MenuItem):boolean method.
+
+Android Studio adds a stub for the method:
+
+```java
+@Override
+public boolean onNavigationItemSelected(MenuItem item) {
+     return false;
+}
+```
+You learn how to use this stub in the next section.
+
+3. Before setting up the navigation item listener, add code to the onCreate() method for the Activity to instantiate the DrawerLayout and NavigationView objects (drawer and navigationView in the code below):
+
+```java
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        toolbar = findViewById(R.id.tollbar);
+        setSupportActionBar(toolbar);
+
+        drawerLayout =findViewById(R.id.drawerlayout);
+        navigationView = findViewById(R.id.navigation_view);
+
+        navigationView.setNavigationItemSelectedListener(this);
+
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,
+                0,0);
+
+        drawerLayout.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
+    }
+```
+
+The code above instantiates an [ActionBarDrawerToggle](https://developer.android.com/reference/android/support/v7/app/ActionBarDrawerToggle.html), which substitutes a special drawable for the Up button in the app bar, and links the Activity to the DrawerLayout. The special drawable appears as a "hamburger" navigation icon when the drawer is closed, and animates into an arrow as the drawer opens.
+
+**Note**: Be sure to use the ActionBarDrawerToggle in support-library-v7.appcompact, not the version in support-library-v4.
+
+**Tip**: You can customize the animated toggle by defining the drawerArrowStyle in your ActionBar theme. For more detailed information about the ActionBar theme, see Adding the App Bar in the Android Developer documentation.
+
+The code above implements addDrawerListener() to listen for drawer open and close events, so that when the user taps custom drawable button, the navigation drawer slides out.
+
+You must also use the syncState() method of ActionBarDrawerToggle to synchronize the state of the drawer indicator. The synchronization must occur after the DrawerLayout instance state has been restored, and any other time when the state may have diverged in such a way that the ActionBarDrawerToggle was not notified.
+
+The code above ends by setting a listener, setNavigationItemSelectedListener(), to the navigation drawer to listen for item clicks.
+
+### Handling navigation menu item selections
+
+Add code to the onNavigationItemSelected() method stub to handle menu item selections. This method is called when an item in the navigation drawer menu is tapped. You can use switch case statements to take the appropriate action based on the menu item's id, which you can retrieve using the getItemId() method:
+
+```java
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        switch (item.getItemId()) {
+            case R.id.profile:
+                ProfileFragment profileFragment = new ProfileFragment();
+                transaction.replace(R.id.contentlayout, profileFragment);
+                transaction.commit();
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            case R.id.dashBoard:
+                DashBoard dashBoard = new DashBoard();
+                transaction.replace(R.id.contentlayout, dashBoard);
+                transaction.commit();
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+        }
+        return false;
+    }
+```
+
+After the user taps a navigation drawer selection or taps outside the drawer, the DrawerLayout closeDrawer() method closes the drawer.
 
