@@ -380,4 +380,214 @@ Implement/override the _onNothingSelected()_ callback method of the [AdapterView
 
 For more information about using spinners, see [Spinners](https://developer.android.com/guide/topics/ui/controls/spinner.html) in the Android developer documentation.
 
+## Practical Example:
+
+### activity_mail.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context=".UserInoutControls">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:src="@mipmap/ic_launcher" />
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your name"
+        android:layout_marginTop="10dp"
+        android:inputType="textCapWords" />
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your emailid"
+        android:inputType="textEmailAddress"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:id="@+id/mobile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your mobileno"
+        android:inputType="number"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your password"
+        android:inputType="textPassword"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gender"
+        android:layout_marginTop="10dp"
+        android:textSize="20sp" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+        <RadioButton
+            android:id="@+id/malerb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Male" />
+
+        <RadioButton
+            android:id="@+id/femalerb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Female" />
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Technical Skills"
+        android:layout_marginTop="10dp"
+        android:textSize="20sp" />
+
+    <CheckBox
+        android:id="@+id/java"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Java"
+        android:layout_marginTop="10dp"/>
+
+    <CheckBox
+        android:id="@+id/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Android"
+        android:layout_marginTop="10dp"/>
+
+    <Spinner
+        android:id="@+id/branchsp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/branches" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="displyData"
+        android:text="Display" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ResultData"
+            android:textSize="30sp" />
+    </ScrollView>
+</LinearLayout>
+```
+
+### string.xml
+
+```xml
+<string-array name="branches">
+        <item></item>
+        <item>CSE</item>
+        <item>ECE</item>
+        <item>EEE</item>
+        <item>IT</item>
+        <item>Mech</item>
+</string-array>
+```
+
+### MainActivity.java
+
+```java
+import android.os.Bundle;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class UserInoutControls extends AppCompatActivity {
+
+    EditText et_name, et_email, et_phone, et_pass;
+    RadioButton r_male, r_female;
+    CheckBox ch_java, ch_android;
+    Spinner sp_branch;
+    TextView tv_data;
+    String gender;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        et_name = findViewById(R.id.name);
+        et_email = findViewById(R.id.email);
+        et_phone = findViewById(R.id.mobile);
+        et_pass = findViewById(R.id.password);
+
+        tv_data = findViewById(R.id.result);
+
+        r_male = findViewById(R.id.malerb);
+        r_female = findViewById(R.id.femalerb);
+
+        ch_java = findViewById(R.id.java);
+        ch_android = findViewById(R.id.android);
+
+        sp_branch = findViewById(R.id.branchsp);
+
+    }
+
+    public void displyData(View view) {
+        String name = et_name.getText().toString();
+        String email = et_email.getText().toString();
+        String phone = et_phone.getText().toString();
+        String pass = et_pass.getText().toString();
+        if (r_male.isChecked()) {
+            gender = r_male.getText().toString();
+        } else if (r_female.isChecked()) {
+            gender = r_female.getText().toString();
+        }
+        StringBuilder builder = new StringBuilder();
+        if (ch_java.isChecked()) {
+            builder.append(ch_java.getText().toString() + ",");
+        }
+
+        if (ch_android.isChecked()) {
+            builder.append(ch_android.getText().toString());
+        }
+
+        String branch = sp_branch.getSelectedItem().toString();
+
+
+        tv_data.setText(name + "\n" + email + "\n" + phone + "\n" + pass + "\n" +
+                gender + "\n" + builder.toString() + "\n" + branch);
+
+    }
+}
+```
+
 
