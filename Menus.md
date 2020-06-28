@@ -4,8 +4,6 @@
 A menu is a set of options. The user can select from a menu to perform a function, for example searching for information, saving information, editing information, or navigating to a screen. The figure below shows the types of menus that the Android system offers. 
 
 <br>
-
-
 <p align="center">
 <img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/types_menus.png">
 </p>
@@ -324,7 +322,7 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
     
-### Contextual menus
+## Contextual Menus
     
 Use a contextual menu to allow users to take an action on a selected [View](https://developer.android.com/reference/android/view/View.html). Contextual menus are most often used for items in a [ListView](https://developer.android.com/reference/android/widget/ListView.html), [RecyclerView](https://developer.android.com/reference/android/support/v7/widget/RecyclerView.html), [GridView](https://developer.android.com/reference/android/widget/GridView.html), or other view collection in which the user can perform direct actions on each item.
 
@@ -473,7 +471,7 @@ If you are using the _menuInfo_ information for a _RecyclerView_ or a _GridView_
      AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 ```
      
-### Contextual action bar Menu
+## Contextual action bar Menu
      
 A **_contextual action bar_** appears at the top of the screen to present actions the user can perform on a _View_ after long-clicking the _View_, as shown in the figure below.
      
@@ -518,4 +516,213 @@ Follow these steps to create a contextual action bar, as shown in the figure bel
 4. Create a method to perform an action for each context menu item.
      
 ### Creating the XML resource file 
+     
+Create the XML menu resource directory and file by following the steps in the previous section on the options menu. Use a suitable name for the file, such as _menu_context_. Add icons for the context menu items. For example, the **Edit** menu item would have these attributes:
+     
+```xml
+<item
+   android:id="@+id/context_edit"
+   android:orderInCategory="10"
+   android:icon="@drawable/ic_action_edit_white"
+   android:title="Edit" />
+```
+     
+The standard contextual action bar has a dark background. Use a light or white color for the icons. If you are using clip art icons, choose **HOLO_DARK** for the **Theme** drop-down menu when creating the new image asset.
+     
+### Setting the long-click listener
+     
+Use [setOnLongClickListener()](https://developer.android.com/reference/android/view/View.html#setOnLongClickListener(android.view.View.OnLongClickListener)) to set a long-click listener to the _View_ that should trigger the contextual action bar. Add the code to set the long-click listener to the _Activity_ using the _onCreate()_ method. 
+
+Follow these steps:
+
+1. Declare the member variable mActionMode:
+  
+```java 
+     private ActionMode mActionMode;
+```
+     
+You will call [startActionMode()](https://developer.android.com/reference/android/app/Activity.html#startActionMode(android.view.ActionMode.Callback)) to enable [ActionMode](https://developer.android.com/reference/android/view/ActionMode.html), which returns the _ActionMode_ created. By saving this in a member variable _(mActionMode)_, you can make changes to the contextual action bar in response to other events.
+     
+2. Set up the contextual action bar listener in the _onCreate()_ method, using _View_ as the type in order to use the _setOnLongClickListener_ like below syantax:
+     
+```java
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+    // ... The rest of the onCreate code.
+    Button b1 = findViewById(R.id.button); // Instead of Button you can write your own view
+    b1.setOnLongClickListener(new View.OnLongClickListener()   
+    {
+       // Start ActionMode after long-click.
+    });
+ }
+```
+     
+### Implementing the ActionMode.Callback interface
+     
+Before you can add the code to _onCreate()_ to start _ActionMode_, you must implement the [ActionMode.Callback](https://developer.android.com/reference/android/view/ActionMode.Callback.html) interface to manage the _ActionMode_ lifecycle. In its callback methods, you can specify the actions for the contextual action bar, and respond to clicks on action items.
+     
+1. Add the following method to the _Activity_ to implement the interface:
+     
+```java
+ public ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
+    // ... Code to create ActionMode.
+ }
+```
+     
+2. Add the _onCreateActionMode()_ code within the brackets of the above method to create ActionMode:
+     
+```java
+ @Override
+ public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+       // Inflate a menu resource providing context menu items
+       MenuInflater inflater = mode.getMenuInflater();
+       inflater.inflate(R.menu.menu_context, menu);
+       return true;
+ }
+```
+    
+The [onCreateActionMode()](https://developer.android.com/reference/android/view/ActionMode.Callback.html#onCreateActionMode(android.view.ActionMode,%20android.view.Menu)) method inflates the menu using the same pattern used for a floating context menu. But this inflation occurs only when _ActionMode_ is created, which is when the user performs a long-click. The [MenuInflater](https://developer.android.com/reference/android/view/MenuInflater.html) class provides the [inflate()](https://developer.android.com/reference/android/view/MenuInflater.html#inflate(int,%20android.view.Menu)) method, which takes as a parameter the resource _id_ for an XML layout resource to load (_menu_context_ in the above example), and the [Menu](https://developer.android.com/reference/android/view/Menu.html) to inflate into (_menu_ in the above example).
+     
+3. Add the [onActionItemClicked()](https://developer.android.com/reference/android/view/ActionMode.Callback.html#onActionItemClicked(android.view.ActionMode,%20android.view.MenuItem)) method with your handlers for each menu item:
+    
+```java
+     @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId()){
+                case R.id.share:
+                    Toast.makeText(ContextActionBarActivity.this, "You are Selected"+item.getTitle(), Toast.LENGTH_SHORT).show();
+                    mode.finish();
+                    break;
+                case R.id.edit:
+                    mode.finish();
+                    break;
+                case R.id.delete:
+                    mode.finish();
+                    break;
+            }
+            return false;
+        }
+```
+     
+The above code above uses the [getItemId()](https://developer.android.com/reference/android/view/MenuItem.html#getItemId()) method to get the _id_ for the selected menu item, and uses it in a _switch case_ block to determine which action to take. The _id_ in each _case_ statement is the _android:id_ attribute assigned to the menu item in the XML menu resource file.
+
+The actions shown are the _editNote()_ and _shareNote()_ methods, which you create in the Activity. After the action is picked, you use the mode.finish() method to close the contextual action bar.
+     
+4. Add the [onPrepareActionMode()](https://developer.android.com/reference/android/view/ActionMode.Callback.html#onPrepareActionMode(android.view.ActionMode,%20android.view.Menu)) and [onDestroyActionMode()](https://developer.android.com/reference/android/view/ActionMode.Callback.html#onDestroyActionMode(android.view.ActionMode)) methods, which manage the ActionMode lifecycle:
+     
+ ```java
+ @Override
+ public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+       return false; // Return false if nothing is done.
+ }
+```
+     
+The _onPrepareActionMode()_ method shown above is called each time _ActionMode_ occurs, and is always called after _onCreateActionMode()_.
+     
+```java
+@Override
+public void onDestroyActionMode(ActionMode mode) {
+   mActionMode = null;
+}
+```
+     
+The _onDestroyActionMode()_ method shown above is called when the user exits _ActionMode_ by clicking **Done** in the contextual action bar, or clicking on a different view.
+     
+The following is the full code for the [ActionMode.Callback](https://developer.android.com/reference/android/view/ActionMode.Callback.html) interface implementation:
+     
+```java
+private ActionMode.Callback callback = new ActionMode.Callback() {
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            mode.getMenuInflater().inflate(R.menu.menu, menu);
+            return true;
+        }
+        // Called each time ActionMode is shown. Always called after onCreateActionMode.
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+        // Called when the user selects a contextual menu item
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.share:
+                    Toast.makeText(ContextActionBarActivity.this, "You are Selected" + item.getTitle(), Toast.LENGTH_SHORT).show();
+                    mode.finish();
+                    break;
+                case R.id.edit:
+                    mode.finish();
+                    break;
+                case R.id.delete:
+                    mode.finish();
+                    break;
+            }
+            return false;
+        }
+        // Called when the user exits the action mode
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            mActionMode = null;
+        }
+    };
+```
+     
+### Starting ActionMode
+     
+You use [startActionMode()](https://developer.android.com/reference/android/app/Activity.html#startActionMode(android.view.ActionMode.Callback)) to start _ActionMode_ after the user performs a long-click.
+
+To start _ActionMode_, add the _onLongClick()_ method within the brackets of the _setOnLongClickListener_ method in _onCreate()_ below syntax:
+     
+```java
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+   // ... Rest of onCreate code
+   b1.setOnLongClickListener(new View.OnLongClickListener() {
+      // Called when the user long-clicks on articleView
+      public boolean onLongClick(View view) {
+         if (mActionMode != null) return false;
+         // Start the contextual action bar
+         // using the ActionMode.Callback.
+         mActionMode = 
+               MainActivity.this.startActionMode(callback);
+         view.setSelected(true);
+         return true;
+      }
+   });
+}
+```
+     
+The above code first ensures that the _ActionMode_ instance is not recreated if it's already active by checking whether _mActionMode_ is _null_ before starting the action mode:
+     
+```java
+     if (mActionMode != null) return false;
+```
+     
+When the user performs a long-click, the call is made to _startActionMode()_ using the _ActionMode.Callback_ interface, and the contextual action bar appears at the top of the display. The [setSelected()](https://developer.android.com/reference/android/view/View.html#setSelected(boolean)) method changes the state of this _View_ to selected (set to _true_).
+     
+The following is the code for the _onCreate()_ method in the _Activity_, which now includes _setOnLongClickListener()_ and _startActionMode()_:
+     
+```java
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.design);
+        Button b1 = findViewById(R.id.button);
+        b1.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (mActionMode != null) {
+                    return false;
+                }
+                // Start the contextual action bar using the ActionMode.Callback.
+                mActionMode = ContextActionBarActivity.this.startActionMode(callback);
+                return true;
+            }
+        });
+    }
+```
+    
+## Popup menu
+     
+     
      
