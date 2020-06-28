@@ -180,3 +180,9 @@ For more information about checkboxes, see [Checkboxes](https://developer.androi
 
 Use radio buttons when you have two or more options that are mutually exclusive. When the user selects one, the others are automatically deselected. (If you want to enable more than one selection from the set, use checkboxes.)
 
+<br>
+<p align="center">
+<img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/radiobuttons.png">
+</p>
+<br>
+
