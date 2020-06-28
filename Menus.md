@@ -324,5 +324,42 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
     
-   
+### Contextual menus
+    
+Use a contextual menu to allow users to take an action on a selected [View](https://developer.android.com/reference/android/view/View.html). Contextual menus are most often used for items in a [ListView](https://developer.android.com/reference/android/widget/ListView.html), [RecyclerView](https://developer.android.com/reference/android/support/v7/widget/RecyclerView.html), [GridView](https://developer.android.com/reference/android/widget/GridView.html), or other view collection in which the user can perform direct actions on each item.
 
+* Android provides two kinds of contextual menus:
+
+    * A **_context menu_**, shown on the left side in the figure below, appears as a floating list of menu items when the user performs a long tap on a _View_. It is typically used to modify the View or use it in some fashion. 
+        - For example, a context menu might include 
+            - **Edit** to edit the contents of a _View_, 
+            - **Delete** to delete a _View_,
+            - **Share** to share a _View_ over social media. Users can perform a contextual action on one selected View at a time.
+
+    * A **_contextual action bar_**, shown on the right side of the figure below, appears at the top of the screen in place of the app bar or underneath the app bar, with action items that affect one or more selected _View_ elements. Users can perform an action on multiple _View_ elements at once, if your app allows it.
+    
+<br>
+        <p align="center">
+            <img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/Context%20Menu%20Types.jpg">
+        </p>
+ <br>
+
+### Floating context menu
+
+<p>
+    The familiar resource-inflate design pattern is used to create a context menu, modified to include registering (associating) the context menu with a _View_. The pattern consists of the steps shown in the figure below.
+<p>
+
+<br>
+        <p align="center">
+            <img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/contextmenufloating.png">
+        </p>
+ <br>
+
+#### Steps to Implement Context Menu:
+     
+1. Create an XML menu resource file for the menu items. Assign appearance and position attributes as described in the previous section for the options menu.
+2. Register a View to the context menu using the [registerForContextMenu()](https://developer.android.com/reference/android/app/Activity.html#registerForContextMenu(android.view.View)) method of the _Activity_ class.
+3. Implement the [onCreateContextMenu()](https://developer.android.com/reference/android/view/View.OnCreateContextMenuListener.html#onCreateContextMenu(android.view.ContextMenu,%20android.view.View,%20android.view.ContextMenu.ContextMenuInfo)) method in your _Activity_ to inflate the menu.
+4. Implement the [onContextItemSelected()](https://developer.android.com/reference/android/app/Activity.html#onContextItemSelected(android.view.MenuItem)) method in your _Activity_ to handle menu-item clicks.
+5. Create a method to perform an action for each context menu item.
