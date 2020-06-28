@@ -104,7 +104,7 @@ To display the dialog, call its show() method:
 alertDialog.show();
 ```
 
-## Date and time pickers
+## Date and Time pickers
 
 Android provides ready-to-use dialogs, called _pickers_, for picking a time or a date. Use them to ensure that your users pick a valid time or date that is formatted correctly and adjusted to the user's locale. Each picker provides controls for selecting each part of the time (hour, minute, AM/PM) or date (month, day, year).
 
@@ -114,3 +114,128 @@ Android provides ready-to-use dialogs, called _pickers_, for picking a time or a
 </p>
 <br>
 
+
+When showing a picker, you should use an instance of DialogPickerDialog, which displays a dialog window floating on top of its Activity window.
+
+**Tip**: Here you can use fragments insted of for the pickers is that you can implement different layout configurations, such as a basic dialog on handset-sized displays or an embedded part of a layout on large displays.
+
+### Create DatePickerDialog
+
+1. Implement DatePickerDialog.OnDateSetListener to create a standard date picker with a listener.
+
+```java
+DatePickerDialog datePicker= new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+// Implement OnDateSetListener           
+});
+```
+
+2. Click the red bulb icon and choose **Implement methods** from the popup menu. A dialog appears with [onDateSet()](https://developer.android.com/reference/android/app/DatePickerDialog.OnDateSetListener.html#onDateSet(android.widget.DatePicker,%20int,%20int,%20int)) already selected and the **Insert @Override** option selected. Click **OK** to create the empty onDateSet() method. This method will be called when the user sets the date.
+
+```java
+import android.widget.DatePicker;
+```
+
+The _onDateSet()_ parameters should be _int i, int i1,_ and _int i2_. Change the names of these parameters to ones that are more readable:
+
+```java
+public void onDateSet(DatePicker datePicker, int year, int month, int day)
+```
+
+3. You use your version of the callback method to initialize the _year_, _month_, and _day_ for the date picker. For example, you can add the following code to _onCreateDialog()_ to initialize the _year_, _month_, and _day_ from [Calendar](https://developer.android.com/reference/java/util/Calendar.html), and return the dialog and these values to the _Activity_. As you enter **Calendar.getInstance()**, specify the import to be **java.util.Calendar**.
+
+```java
+// Use the current date as the default date in the picker.
+ final Calendar c = Calendar.getInstance();
+ int year = c.get(Calendar.YEAR);
+ int month = c.get(Calendar.MONTH);
+ int day = c.get(Calendar.DAY_OF_MONTH);
+```
+
+The Calendar class sets the default date as the current date—it converts between a specific instant in time and a set of calendar fields such as _YEAR, MONTH, DAY_OF_MONTH,_ and _HOUR_. Calendar is locale-sensitive. The _Calendar getInstance()_ method returns a _Calendar_ whose fields are initialized with the current date and time.
+
+### Displaying the Picker
+
+To display the DatePickerDialog, call its show() method:
+
+```java
+datePicker.show();
+```
+
+### Implementation of DatePickerDilaog 
+
+```java
+   public void dpd(View view) {
+        int c_date,c_month,c_year;
+        Calendar c=Calendar.getInstance();
+        c_year=c.get(Calendar.YEAR);
+        c_date=c.get(Calendar.DATE);
+        c_month=c.get(Calendar.MONTH);
+        DatePickerDialog datePicker= new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                Toast.makeText(MainActivity.this, dayOfMonth+"-"+(month+1)+"-"+year, Toast.LENGTH_SHORT).show();
+            }
+        },c_year,c_month,c_date);
+        datePicker.show();
+   }
+```
+
+### Time Picker Dialog:
+
+Follow the same procedures outlined above for a date picker, with the following differences:
+
+1. Implement [TimePickerDialog.OnTimeSetListener](https://developer.android.com/reference/android/app/TimePickerDialog.OnTimeSetListener.html) to create a standard date picker with a listener.
+
+```java
+TimePickerDialog pickerDialog=new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+           //Implement OnTimeset Listener
+ });
+```
+
+2. Click the red bulb icon and choose **Implement methods** from the popup menu.A dialog appears with [onTimeSet()](https://developer.android.com/reference/android/app/TimePickerDialog.OnTimeSetListener.html#onTimeSet(android.widget.TimePicker,%20int,%20int)) already selected and the **Insert @Override** option selected. Click **OK** to create the empty onTimeSet() method. This method will be called when the user sets the date.
+```java
+import android.widget.TimePicker;
+```
+
+The _onTimeSet()_ parameters should be _TimePicker view, int hourOfDay, and int minute_. Change the names of these parameters to ones that are more readable:
+
+```java
+public void onTimeSet(TimePicker view, int hourOfDay, int minute)
+```
+
+3. You use your version of the callback method to initialize the _year_, _month_, and _day_ for the date picker. For example, you can add the following code to _onCreateDialog()_ to initialize the _year_, _month_, and _day_ from [Calendar](https://developer.android.com/reference/java/util/Calendar.html), and return the dialog and these values to the _Activity_. As you enter **Calendar.getInstance()**, specify the import to be **java.util.Calendar**.
+
+```java
+// Use the current date as the default date in the picker.
+ final Calendar c = Calendar.getInstance();
+ int hours = c.get(Calendar.HOUR_OF_DAY);
+ int minute = c.get(Calendar.MINUTE);
+```
+
+The Calendar class sets the default time as the current time—it converts between a specific instant in time and a set of calendar fields such as _hourOfDay, minute,_ and _HOUR_. Calendar is locale-sensitive. The _Calendar getInstance()_ method returns a _Calendar_ whose fields are initialized with the current date and time.
+
+### Displaying the Picker
+
+To display the TimePickerDialog, call its show() method:
+
+```java
+timePicker.show();
+```
+
+### Implementation of TimePickerDilaog 
+
+```java
+public void tpd(View view) {
+        int c_hours,c_minute;
+        Calendar c=Calendar.getInstance();
+        c_hours=c.get(Calendar.HOUR_OF_DAY);
+        c_minute=c.get(Calendar.MINUTE);
+       TimePickerDialog timePicker=new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                Toast.makeText(MainActivity.this, hourOfDay+":"+minute, Toast.LENGTH_SHORT).show();
+            }
+        },c_hours,c_minute,false);
+        timePicker.show();
+   }
+```
