@@ -339,3 +339,10 @@ Add code to the onNavigationItemSelected() method stub to handle menu item selec
 
 After the user taps a navigation drawer selection or taps outside the drawer, the DrawerLayout closeDrawer() method closes the drawer.
 
+### Output:
+
+<br>
+<p align="center">
+<img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/nav_out_put.gif">
+</p>
+<br>
