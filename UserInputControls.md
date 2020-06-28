@@ -590,4 +590,10 @@ public class UserInoutControls extends AppCompatActivity {
 }
 ```
 
+### Output
 
+<br>
+<p align="center">
+<img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/userinputcontrol_output.jpg">
+</p>
+<br>
