@@ -148,5 +148,60 @@ Use a transparent version of black on a colored surface to preserve legibility.
 <br>
 Avoid using opaque gray text that isn’t legible on colored surfaces.
 
+### Typography
+
+The Android design language relies on traditional typographic tools such as scale, space, rhythm, and alignment with an underlying grid. Successful deployment of these tools is essential to help users quickly understand a screen of information. To support such use of typography, Android supplies a type family named [Roboto](https://fonts.google.com/specimen/Roboto), created specifically for the requirements of UI and high-resolution screens.
+
+With Android 8.0 (API level 26), you can also choose to provide a font as a resource in XML that is bundled with the app package (APK), or download a font from a font provider app. These features are available on devices running Android API versions 14 and higher through the Support Library 26.
+
+### Font styles
+
+The Android platform provides predefined font styles and sizes that you can use in your app. These styles and sizes were developed to balance content density and reading comfort under typical conditions. Type sizes are specified with sp (scaleable pixels) to enable large type modes for [accessibility](https://material.io/design/usability/accessibility.html).
+
+Be careful not to use too many different type sizes and styles together in your layout.
+
+<br>
+<p align="center">
+<img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/typography_styles.png" width="500dp">
+</p>
+<br>
+
+To use one of these predefined styles in a View, set the android:textAppearance attribute. This attribute defines the default appearance of the text: its color, typeface, size, and style. Use the backward-compatible [TextAppearance.AppCompat](https://developer.android.com/reference/android/support/v7/appcompat/R.style.html#TextAppearance_AppCompat) style.
+
+For example, to make a TextView appear in the Display 3 style, add the following attribute to the TextView in XML:
+
+```xml
+android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+```
+
+For more information on styling text, view the [Typography](https://material.io/design/typography/#) Material Design guidelines.
 
 
+### Fonts as resources
+
+Android 8.0 (API level 26) introduces Fonts in XML, which lets you bundle fonts as resources in your app package (APK). You can create a font folder within the res folder as a resource directory using Android Studio, and then add a font XML file to the font folder. The fonts are compiled in your R file and are automatically available in Android Studio. To access a font resource, use **_@font/myfont, or R.font.myfont_**.
+
+To use the Fonts in XML feature, the device that runs your app must run Android 8.0 (API level 26). To use the feature on devices running Android 4.1 (API level 16) and higher, use the Support Library 26. For more information on using the support library, refer to the Using the [support library section](https://developer.android.com/guide/topics/ui/look-and-feel/fonts-in-xml.html#using-support-lib).
+
+To learn how to add fonts as XML resources, see [Fonts in XML](https://developer.android.com/guide/topics/ui/look-and-feel/fonts-in-xml.html).
+
+### Downloadable fonts
+
+An alternative to bundling fonts with the app package (APK) is to download the fonts from a provider app. Android 8.0 (API level 26) enables APIs to request fonts from a provider app, and the feature is available on devices running Android API versions 14 and higher through the Support Library 26. A font provider app is an app that retrieves fonts and caches them locally so that other apps can request and share fonts.
+
+Downloadable fonts offer the following benefits:
+
+Reduces the APK size.
+Increases the app installation success rate.
+Improves the overall system health, as multiple APKs can share the same font through a provider. This saves users cellular data, phone memory, and disk space. In this model, the font is fetched over the network when needed.
+You can set your app to download fonts by using the layout editor in Android Studio 3.0. For detailed instructions, see [Downloadable Fonts](https://developer.android.com/guide/topics/ui/look-and-feel/downloadable-fonts.html).
+
+### How does Downloadable Fonts work?
+
+A font provider is an application that retrieves fonts and caches them locally so other apps can request and share fonts. Figure 1 illustrates the process.
+
+<br>
+<p align="center">
+<img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/downloadable-fonts-process.png" width="400dp">
+</p>
+<br>
