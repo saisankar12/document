@@ -730,6 +730,137 @@ A popup menu is typically used to provide an overflow of actions (similar to the
 
 For example, the Gmail app uses a popup menu anchored to the overflow icon in the app bar when showing an email message. The popup menu items **Reply
 **, **Reply All**, and **Forward** are related to the email message, but don't affect or act on the message. Actions in a popup menu should not directly affect the corresponding content (use a contextual menu to directly affect selected content). As shown below, a popup can be anchored to the overflow action button in the app bar.
-     
-     
-     
+    
+<br>
+ <p align="center">
+    <img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/dg_popupmenu.png">
+ </p>
+<br>
+
+### Creating a popup menu
+    
+Follow these steps to create a popup menu (refer to figure below):
+
+<br>
+ <p align="center">
+    <img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/dg_popup_menu_design_pattern.png">
+ </p>
+<br>
+    
+### Steps to Implement PopUp Menu:
+    
+1. Create an XML menu resource file for the popup menu items, and assign appearance and position attributes (as described in a previous section).
+2. Add an [Button](https://developer.android.com/reference/android/widget/Button.html) for the popup menu icon in the XML activity layout file.
+3. Assign [onClickListener()](https://developer.android.com/reference/android/view/View.OnClickListener.html) to the _Button_.
+4. Override the _onClick()_ method to inflate the popup menu and register it with [PopupMenu.OnMenuItemClickListener](https://developer.android.com/reference/android/widget/PopupMenu.OnMenuItemClickListener.html).
+5. Implement the [onMenuItemClick()](https://developer.android.com/reference/android/view/MenuItem.OnMenuItemClickListener.html#onMenuItemClick(android.view.MenuItem)) method.
+6. Create a method to perform an action for each popup menu item.
+    
+Create the XML menu resource directory and file by following the steps in a previous section. Use a suitable name for the file, such as _menu_popup_.
+    
+<br>
+ <p align="center">
+    <img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/popup_menu_settings_favorites.png">
+ </p>
+<br>
+    
+### Adding an ImageButton for the icon to click
+    
+Use an [Button](https://developer.android.com/reference/android/widget/Button.html) in the _Activity_ layout for the icon that triggers the popup menu. Popup menus are anchored to a _View_ in the _Activity_, such as an ImageButton. The user clicks it to see the menu.
+    
+```xml
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pop Up Menu"/>
+```
+    
+### Assigning onClickListener to the button
+    
+1. Create a member variable (mButton) in the Activity class definition:
+    
+```java
+    public class MainActivity extends AppCompatActivity {
+    private Button mButton;
+    // ... Rest of Activity code
+ }
+```    
+    
+2. In the _onCreate()_ method for the same _Activity_, assign _onClickListener()_ to the Button:
+    
+```java
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_popup_menu);
+        b1= findViewById(R.id.button);
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // Implement PopMenu Here
+            }
+        });
+    }
+```
+    
+### Inflating the popup menu
+    
+As part of the _setOnClickListener()_ method within _onCreate()_, add the onClick() method to inflate the popup menu and register it with [PopupMenu.OnMenuItemClickListener](https://developer.android.com/reference/android/widget/PopupMenu.OnMenuItemClickListener.html):
+    
+```java
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu=new PopupMenu(PopupMenuActivity.this,b1);
+                popupMenu.getMenuInflater().inflate(R.menu.menu,popupMenu.getMenu());
+                
+                popupMenu.show();
+            }
+        });
+    }
+```
+    
+The method instantiates a [PopupMenu](https://developer.android.com/reference/android/widget/PopupMenu.html) object, which is _popup_ in the example above. Then the method uses the [MenuInflater](https://developer.android.com/reference/android/view/MenuInflater.html) class and its [inflate()](https://developer.android.com/reference/android/view/MenuInflater.html#inflate(int,%20android.view.Menu)) method.
+
+The _inflate()_ method takes the following parameters:
+
+* The resource _id_ for an XML layout resource to load, which is _menu_popup_ in the example above.
+* The [Menu](https://developer.android.com/reference/android/view/Menu.html) to inflate into, which is _popup.getMenu()_ in the example above.
+    
+The code then registers the popup with the listener, [PopupMenu.OnMenuItemClickListener](https://developer.android.com/reference/android/widget/PopupMenu.OnMenuItemClickListener.html).
+    
+### Implementing onMenuItemClick
+    
+To perform an action when the user selects a popup menu item, implement the [onMenuItemClick()](https://developer.android.com/reference/android/widget/PopupMenu.OnMenuItemClickListener.html#onMenuItemClick(android.view.MenuItem)) callback within the above _setOnClickListener()_ method. Finish the method with _popup.show_ to show the popup menu:
+    
+```java
+       b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu=new PopupMenu(PopupMenuActivity.this,b1);
+                popupMenu.getMenuInflater().inflate(R.menu.menu,popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()){
+                            case R.id.share:
+                                Toast.makeText(PopupMenuActivity.this, "Share", Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                        return false;
+                    }
+                });
+                popupMenu.show();
+            }
+        });
+```
+   
+### The PopupMenu Output Shown Below:
+    
+<br>
+ <p align="center">
+    <img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/pop_up_menu_output.jpg">
+ </p>
+<br>    
+    
