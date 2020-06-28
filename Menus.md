@@ -363,3 +363,58 @@ Use a contextual menu to allow users to take an action on a selected [View](http
 3. Implement the [onCreateContextMenu()](https://developer.android.com/reference/android/view/View.OnCreateContextMenuListener.html#onCreateContextMenu(android.view.ContextMenu,%20android.view.View,%20android.view.ContextMenu.ContextMenuInfo)) method in your _Activity_ to inflate the menu.
 4. Implement the [onContextItemSelected()](https://developer.android.com/reference/android/app/Activity.html#onContextItemSelected(android.view.MenuItem)) method in your _Activity_ to handle menu-item clicks.
 5. Create a method to perform an action for each context menu item.
+     
+     
+#### Creating the XML resource file
+     
+To create the XML menu resource directory and file, follow the steps in the previous section for the options menu. However, use a different name for the file, such as menu_context. Add the context menu items within _<item ... />_ tags.
+     
+For example, the following code defines the **_Edit_** menu item:
+     
+```xml
+<item
+   android:id="@+id/context_edit"
+   android:title="Edit"
+   android:orderInCategory="10"/>
+```
+    
+### Registering a View to the context menu
+     
+To register a View to the context menu, call the [registerForContextMenu()](https://developer.android.com/reference/android/app/Activity.html#registerForContextMenu(android.view.View)) method with the View. Registering a context menu for a view sets the [View.OnCreateContextMenuListener](https://developer.android.com/reference/android/view/View.OnCreateContextMenuListener.html) on the View to this activity, so that [onCreateContextMenu()](https://developer.android.com/reference/android/app/Activity.html#onCreateContextMenu(android.view.ContextMenu,%20android.view.View,%20android.view.ContextMenu.ContextMenuInfo)) is called when it's time to show the context menu. (You implement onCreateContextMenu in the next section.)
+     
+For example, in the _onCreate()_ method for the _Activity_, you would add _registerForContextMenu()_:
+     
+```java
+// Registering the context menu to the TextView of the article.
+ListView names_list = findViewById(R.id.list);
+registerForContextMenu(names_list);
+```
+     
+Multiple views can be registered to the same context menu. If you want each item in a [TextView](https://developer.android.com/reference/android/widget/TextView.html) or [ListView](https://developer.android.com/reference/android/widget/ListView.html) or [GridView](https://developer.android.com/reference/android/widget/GridView.html) to provide the same context menu, register all items for a context menu by passing the [TextView](https://developer.android.com/reference/android/widget/TextView.html) or [ListView](https://developer.android.com/reference/android/widget/ListView.html) or [GridView](https://developer.android.com/reference/android/widget/GridView.html) to [registerForContextMenu()](https://developer.android.com/reference/android/app/Activity.html#registerForContextMenu(android.view.View)).
+     
+### Implementing the _onCreateContextMenu()_ method
+     
+When the registered View receives a long-click event, the system calls the [onCreateContextMenu()](https://developer.android.com/reference/android/view/View.OnCreateContextMenuListener.html#onCreateContextMenu(android.view.ContextMenu,%20android.view.View,%20android.view.ContextMenu.ContextMenuInfo)) method, which you can override in your _Activity_. (Long-click events are also called touch & hold events and _long-press_ events.)
+     
+The _onCreateContextMenu()_ method is where you define the menu items, usually by inflating a menu resource.
+
+For example:
+
+```java
+     @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu,menu);
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+```
+     
+In the code above:
+
+   - The _menu_ parameter for _onCreateContextMenu()_ is the context menu to be built.
+   - The _v_ parameter is the _View_ registered for the context menu.
+   - The _menuInfo_ parameter is extra information about the _View_ registered for the context menu. This information varies depending on the class of the _v_ parameter, which could be a _RecyclerView_ or a _GridView_.
+
+   If you are registering a _RecyclerView_ or a _GridView_, you instantiate a [ContextMenu.ContextMenuInfo](https://developer.android.com/reference/android/view/ContextMenu.ContextMenuInfo.html) object to provide information about the item selected, and pass it as menuInfo, such as the row id, position, or child _View_.
+     
+
