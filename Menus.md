@@ -724,5 +724,12 @@ The following is the code for the _onCreate()_ method in the _Activity_, which n
     
 ## Popup menu
      
+A [PopupMenu](https://developer.android.com/reference/android/widget/PopupMenu.html) is a vertical list of items anchored to a [View](https://developer.android.com/reference/android/view/View.html). It appears below the anchor _View_ if there is room, or above the _View_ otherwise.
+
+A popup menu is typically used to provide an overflow of actions (similar to the overflow action icon for the options menu) or the second part of a two-part command. Use a popup menu for extended actions that relate to regions of content in your _Activity_. Unlike a context menu, a popup menu is anchored to a _Button_, is always available, and its actions generally do not affect the content of the _View_.
+
+For example, the Gmail app uses a popup menu anchored to the overflow icon in the app bar when showing an email message. The popup menu items **Reply
+**, **Reply All**, and **Forward** are related to the email message, but don't affect or act on the message. Actions in a popup menu should not directly affect the corresponding content (use a contextual menu to directly affect selected content). As shown below, a popup can be anchored to the overflow action button in the app bar.
+     
      
      
