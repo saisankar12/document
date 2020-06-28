@@ -3,7 +3,7 @@
 - ~Input Controls~
 - Testing your Application (Unit Testing)
 - ~Menus & Pickers~
-- Using Material Design for UI
+- ~Using Material Design for UI~
 - User Navigation
   - Navigation Drawer 
   - ~Navigation Components~
