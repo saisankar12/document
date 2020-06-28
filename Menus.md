@@ -387,6 +387,16 @@ For example, in the _onCreate()_ method for the _Activity_, you would add _regis
 ```java
 // Registering the context menu to the TextView of the article.
 ListView names_list = findViewById(R.id.list);
+
+// Create String Array
+String[] s ={"Anusha","Pavan","Krishna","Siva","Masthan","Muni","Sai","Gopal","Chaitanya","Vara Prasad",
+                "Anusha","Pavan","Krishna","Siva","Masthan","Muni","Sai","Gopal","Chaitanya","Vara Prasad"};
+
+// For Displaying String Array Data in ListView, For That we need Create ArrayAdapter Like Below
+ArrayAdapter<String> adapter=new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,s);
+     
+// set Adapter to ListView, Then Only we can display the data in ListView        
+lv.setAdapter(adapter);
 registerForContextMenu(names_list);
 ```
      
@@ -417,4 +427,95 @@ In the code above:
 
    If you are registering a _RecyclerView_ or a _GridView_, you instantiate a [ContextMenu.ContextMenuInfo](https://developer.android.com/reference/android/view/ContextMenu.ContextMenuInfo.html) object to provide information about the item selected, and pass it as menuInfo, such as the row id, position, or child _View_.
      
+The [MenuInflater](https://developer.android.com/reference/android/view/MenuInflater.html) class provides the [inflate()](https://developer.android.com/reference/android/view/MenuInflater.html#inflate(int,%20android.view.Menu)) method, which takes two parameters:
 
+   - The resource _id_ for an XML layout resource to load. In the example above, the _id_ is _menu_context_.
+   - The [Menu](https://developer.android.com/reference/android/view/Menu.html) to inflate into. In the example above, the _Menu_ is _menu_.
+
+### Implementing the onContextItemSelected() method
+     
+When the user clicks on a menu item, the system calls the [onContextItemSelected()](https://developer.android.com/reference/android/app/Activity.html#onContextItemSelected(android.view.MenuItem)) method. You override this method in your _Activity_ in order to determine which menu item was clicked, and for which view the menu is appearing. You also use it to implement the appropriate action for the menu items, such as _editNote()_ , _shareNote()_ and _deleteNote()_ in the following code snippet for the **_Edit_** , **_Share_** and **_Delete_** menu items:
+    
+```java
+     @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.share:
+                // You can Write your requirement code here
+                Toast.makeText(this, item.getTitle(), Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.edit:
+                // You can Write your requirement code here
+                Toast.makeText(this, item.getTitle(), Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.delete:
+                // You can Write your requirement code here
+                Toast.makeText(this, item.getTitle(), Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return super.onContextItemSelected(item);
+    }
+```
+   
+The above code snippet uses the [getItemId()](https://developer.android.com/reference/android/view/MenuItem.html#getItemId()) method to get the _id_ for the selected menu item, and uses it in a _switch case_ block to determine which action to take. The _id_ is the _android:id_ attribute assigned to the menu item in the XML menu resource file.
+
+When the user performs a long-click on the article in the _ListView_, the floating context menu appears and the user can click a menu item.
+     
+<br>
+        <p align="center">
+            <img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/ContextMenuExample.jpg">
+        </p>
+ <br>
+     
+If you are using the _menuInfo_ information for a _RecyclerView_ or a _GridView_, you would add a statement before the _switch case_ block to gather the specific information about the selected _View_ (for _info_) by using [AdapterView.AdapterContextMenuInfo](https://developer.android.com/reference/android/widget/AdapterView.AdapterContextMenuInfo.html):
+     
+```java
+     AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+```
+     
+### Contextual action bar Menu
+     
+A **_contextual action bar_** appears at the top of the screen to present actions the user can perform on a _View_ after long-clicking the _View_, as shown in the figure below.
+     
+     
+<br>
+        <p align="center">
+            <img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/Context_Actionbar_SingleComponent.jpg">
+        </p>
+ <br>
+     
+In the above figure:
+
+1. **Contextual action bar**. The bar offers three actions on the right side (**Edit**, **Share**, and **Delete**) and the Done button (left arrow icon) on the left side.
+2. **View**. View on which a long-click triggers the contextual action bar.
+     
+The contextual action bar appears only when contextual action mode, a system implementation of [ActionMode](https://developer.android.com/reference/android/view/ActionMode.html), occurs as a result of the user performing a long-click on one or more selected _View_ elements.
+
+_ActionMode_ represents UI mode for providing alternative interaction, replacing parts of the normal UI until finished. 
+    - For example, text selection is implemented as an _ActionMode_, as are contextual actions that work on a selected item on the screen. Selecting a section of text or long-clicking a view triggers _ActionMode_.
+
+While this mode is enabled, the user can select multiple items, if your app allows it. The user can also deselect items, and continue to navigate within the activity. _ActionMode_ is disabled when one of the following things occur:
+
+* The user deselects all items.
+* The user presses the Back button.
+* The user taps **Done** (the left-arrow icon) on the left side of the action bar.
+     
+When _ActionMode_ is disabled, the contextual action bar disappears.
+
+Follow these steps to create a contextual action bar, as shown in the figure below:
+     
+<br>
+        <p align="center">
+            <img  src="https://github.com/saisankar12/document/blob/master/saisankar_concept_images/dg_context_actionbar_design_pattern.png">
+        </p>
+ <br>
+     
+### Steps To Create ContextActionBar Menus:
+     
+1. Create an XML menu resource file for the menu items, and assign an icon to each one (as described in a previous section).
+2. Set the long-click listener using [setOnLongClickListener()](https://developer.android.com/reference/android/view/View.html#setOnLongClickListener(android.view.View.OnLongClickListener)) to the View that should trigger the contextual action bar. Call [startActionMode()](https://developer.android.com/reference/android/app/Activity.html#startActionMode(android.view.ActionMode.Callback)) within the _setOnLongClickListener()_ method when the user performs a long tap on the View.
+3. Implement the [ActionMode.Callback](https://developer.android.com/reference/android/view/ActionMode.Callback.html) interface to handle the _ActionMode_ lifecycle. Include in this interface the action for responding to a menu-item click in the [onActionItemClicked()](https://developer.android.com/reference/android/view/ActionMode.Callback.html#onActionItemClicked(android.view.ActionMode,%20android.view.MenuItem)) callback method.
+4. Create a method to perform an action for each context menu item.
+     
+### Creating the XML resource file 
+     
