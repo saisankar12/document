@@ -36,7 +36,7 @@
 <img src="https://github.com/Muneiahtellakula/android_development/blob/master/navbar.JPG">
 
 
-## Steps for implementing tabs
+### Steps for implementing tabs
 
 1. Define the tab layout using TabLayout
 2. Implement a fragment and its layout for each tab
@@ -69,7 +69,7 @@
 
 <img src="https://github.com/Muneiahtellakula/android_development/blob/master/pjt_structre.JPG">
 
-#### activity.xml file
+**activity.xml file**
 
 ``` xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -98,7 +98,7 @@
 
 ```
 
-#### MainActivity.java file
+**MainActivity.java file**
 
 ```Java
 package com.muneiah.tablayoutdemoactivity;
@@ -261,17 +261,3 @@ public class ChatFragment extends Fragment {
 ## Output Screen
 
 <img src="https://github.com/Muneiahtellakula/android_development/blob/master/tabNavPractical.gif">
-
-
-
-
-
-## Thank You..!
-
-
-
-
-
-
-
-
